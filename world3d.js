@@ -5,7 +5,7 @@ export function createWorld(){let seed=48391;const rnd=()=>{seed=(seed*1664525+1
  for(let i=-5;i<=5;i++){geometry.box(i*110,.03,0,29,.08,1220,color('#162438'));geometry.box(0,.04,i*110,1220,.08,29,color('#162438'));for(let k=-590;k<=590;k+=22){geometry.box(i*110,.1,k,.35,.05,7,color('#778780'));geometry.box(k,.1,i*110,7,.05,.35,color('#778780'));}}
  for(let i=-5;i<5;i++)for(let j=-5;j<5;j++){const x=(i+.5)*110,z=(j+.5)*110;const park=(i===-1&&j===0)||(i===0&&j===0)||(i===3&&j===-1);if(park){geometry.box(x,.2,z,76,.3,76,color('#254a3f'));for(let t=0;t<6;t++){const tx=x+(rnd()-.5)*58,tz=z+(rnd()-.5)*58;geometry.box(tx,3,tz,1,6,1,color('#635444'));geometry.sphere(tx,7,tz,4,color('#397363'),1,1.4,1);}continue;}
  const b={x,z,w:62+rnd()*13,d:62+rnd()*13,h:34+rnd()*112,i,j};if(i===0&&j===3){b.h=36;b.w=b.d=76;}if((i===2&&j===1)||(i===-3&&j===-3)||(i===1&&j===-4)){b.h=[42,54,78][i===2?0:i===-3?1:2];b.w=b.d=78;}buildings.push(b);
- geometry.box(x,.2,z,b.w+7,.4,b.d+7,color('#3c4857'));const col=[color('#15384f'),color('#223657'),color('#233e58'),color('#26364c')][Math.floor(rnd()*4)];geometry.box(x,b.h/2,z,b.w,b.h,b.d,col);geometry.box(x,b.h+.45,z,b.w+1.6,.9,b.d+1.6,color('#597583'));
+ geometry.box(x,.2,z,b.w+7,.4,b.d+7,color('#3c4857'));const col=[color('#15384f'),color('#223657'),color('#233e58'),color('#26364c')][Math.floor(rnd()*4)];geometry.box(x,b.h/2,z,b.w,b.h,b.d,col);geometry.box(x,b.h+.45,z,b.w+1.6,.9,b.d+1.6,color('#25364b'));
  // Facade windows are flat triangles, merged into the city mesh.
  const warm=[1.2,.78,.38],cool=[.25,.8,1.05];for(let y=6;y<b.h-3;y+=6){for(let a=-b.w/2+6;a<b.w/2-3;a+=7){if(rnd()<.15)continue;const c=rnd()>.45?warm:cool;const zz=b.z+b.d/2+.02;geometry.quad(V(x+a-1.2,y-1.6,zz),V(x+a+1.2,y-1.6,zz),V(x+a+1.2,y+1.6,zz),V(x+a-1.2,y+1.6,zz),V(0,0,1),c);const z2=b.z-b.d/2-.02;geometry.quad(V(x+a+1.2,y-1.6,z2),V(x+a-1.2,y-1.6,z2),V(x+a-1.2,y+1.6,z2),V(x+a+1.2,y+1.6,z2),V(0,0,-1),c);}for(let a=-b.d/2+6;a<b.d/2-3;a+=7){if(rnd()<.18)continue;const c=rnd()>.6?warm:cool;const xx=b.x+b.w/2+.02;geometry.quad(V(xx,y-1.6,z+a+1.2),V(xx,y-1.6,z+a-1.2),V(xx,y+1.6,z+a-1.2),V(xx,y+1.6,z+a+1.2),V(1,0,0),c);const x2=b.x-b.w/2-.02;geometry.quad(V(x2,y-1.6,z+a-1.2),V(x2,y-1.6,z+a+1.2),V(x2,y+1.6,z+a+1.2),V(x2,y+1.6,z+a-1.2),V(-1,0,0),c);}}
  decorateTower(geometry,b,rnd);geometry.box(x-15,b.h+2,z+12,8,4,10,color('#52616e'));geometry.box(x+18,b.h+1.5,z+12,9,3,7,color('#607986'));if(rnd()>.6){geometry.box(x+18,b.h+8,z-18,.4,16,.4,color('#819ca3'));geometry.sphere(x+18,b.h+16,z-18,.5,PALETTE.red);} }
@@ -59,7 +59,7 @@ function decorateTower(g,b,rnd){const{x,z,w,d,h,i,j}=b,glow=(i+j)%3===0?PALETTE.
   for(let y=12;y<h;y+=18){g.box(x,y,z+side*(d/2+.4),w,.28,.35,glow);g.box(x+side*(w/2+.4),y,z,.35,.28,d,glow);}
   g.box(x,h+1.5,z+side*(d/2-1),w-1,.18,.3,glow);g.box(x+side*(w/2-1),h+1.5,z,.3,.18,d-1,glow);
  }
- g.box(x,h+1,z,w-4,.1,d-4,color('#25364b'));g.box(x,h+1.1,z,w-9,.08,d-9,color('#182a3e'));
+ 
  if(h>75){g.box(x,h+4.5,z,w*.34,7,d*.32,metal);g.box(x,h+8.2,z,w*.36,.3,d*.34,glow);g.box(x,h+12,z,w*.18,7,d*.16,color('#1d3855'));g.box(x,h+16,z,w*.19,.3,d*.17,glow);g.limb(V(x,h+15,z),V(x,h+29,z),.23,metal);g.sphere(x,h+29,z,.65,glow);}
  for(let n=0;n<3;n++){const px=x-18+n*7,pz=z+13;g.box(px,h+2.3,pz,5,2.5,8,color('#344d63'));for(let k=0;k<4;k++)g.box(px,h+3.6,pz-2.7+k*1.8,4,.06,.4,color('#142437'));g.box(px,h+2.4,pz-4.1,2,.3,.08,glow);}
  ring(g,x-12,h+1.2,z-12,9,.11,glow,20);g.box(x-12,h+1.22,z-12,1.2,.08,9,PALETTE.white);g.box(x-16,h+1.23,z-12,1,.08,9,PALETTE.white);g.box(x-14,h+1.24,z-12,4,.08,1,PALETTE.white);
