@@ -1,4 +1,4 @@
-import {V,add,sub,mul,dot,length,unit,clamp,color,Geometry} from './engine3d.js?v=20261002town3';
+import {V,add,sub,mul,dot,length,unit,clamp,color,Geometry} from './engine3d.js?v=20261002town4';
 export const PALETTE={red:color('#ee354f'),blue:color('#2058aa'),white:color('#f0faff'),ink:color('#142139'),web:color('#bcefff'),cyan:color('#58d7ee'),glow:[.25,1.65,2.1],pink:[1.8,.22,1.05]};
 export function createWorld(){let seed=48391;const rnd=()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};const buildings=[],shops=[],obstacles=[],geometry=new Geometry(),range=620;
  geometry.box(0,-1,0,1400,2,1400,color('#6e807e'));geometry.box(0,-3,0,2400,2,2400,color('#12445b'));
