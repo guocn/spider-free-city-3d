@@ -1,7 +1,7 @@
-import {V,add,sub,mul,length,unit,clamp,mix,color,Geometry,Renderer} from './engine3d.js?v=20261002town4';
-import {createWorld,Simulation,makeHero,makeBoss,makeCityLife,PALETTE,firstWall} from './world3d.js?v=20261002town4';
-import{Adventure,makePlayer,makeAdventure}from'./adventure.js?v=20261002town4';
-import{installFeatures}from'./features.js?v=20261002town4';
+import {V,add,sub,mul,length,unit,clamp,mix,color,Geometry,Renderer} from './engine3d.js?v=20261002macaron';
+import {createWorld,Simulation,makeHero,makeBoss,makeCityLife,PALETTE,firstWall} from './world3d.js?v=20261002macaron';
+import{Adventure,makePlayer,makeAdventure}from'./adventure.js?v=20261002macaron';
+import{installFeatures}from'./features.js?v=20261002macaron';
 const $=id=>document.getElementById(id),canvas=$('game'),world=createWorld(),sim=new Adventure(world);
 let renderer;
 try{renderer=new Renderer(canvas);}catch(e){$('error').hidden=false;$('error').textContent=e.message;$('start').disabled=true;$('start').textContent='3D 画面无法启动';throw e;}
