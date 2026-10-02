@@ -1,5 +1,5 @@
-import {V,add,sub,mul,dot,length,unit,clamp,color,Geometry} from './engine3d.js?v=20261002garden';
-import {SHOP_CATALOG,CORE_SHOPS} from './town-catalog.js?v=20261002garden';
+import {V,add,sub,mul,dot,length,unit,clamp,color,Geometry} from './engine3d.js?v=20261002garden2';
+import {SHOP_CATALOG,CORE_SHOPS} from './town-catalog.js?v=20261002garden2';
 export const PALETTE={red:color('#ee354f'),blue:color('#2058aa'),white:color('#f0faff'),ink:color('#142139'),web:color('#bcefff'),cyan:color('#58d7ee'),glow:[.25,1.65,2.1],pink:[1.8,.22,1.05]};
 export const MACARON=['#f4a6b0','#f7bd91','#f5df9d','#bce2af','#a6e3d3','#adcff0','#c9b4ec','#f2bedb'];
 export function createWorld(){let seed=48391;const rnd=()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};const buildings=[],shops=[],obstacles=[],geometry=new Geometry(),range=820;const used=new Set();const parks=[];const reserved={'-6,-3':'巷口章鱼烧','-3,-3':'竹签串串铺','0,-3':'暖暖关东煮','3,-3':'小锅生煎','6,-3':'糖葫芦小屋','-7,1':'金麦可颂','-4,1':'海风披萨','-1,1':'暖汤拉面','2,1':'花园餐厅','5,1':'蓝湾寿司'};const reservedNames=new Set(Object.values(reserved));
@@ -14,7 +14,7 @@ export function createWorld(){let seed=48391;const rnd=()=>{seed=(seed*1664525+1
 
  decorateStreets(geometry);decorateTownSquare(geometry);decorateLandmarks(geometry);const find=(i,j)=>buildings.find(b=>b.i===i&&b.j===j);const spawn=find(0,3);const districts=[{name:'河岸楼顶',tag:'安全起点',b:spawn},{name:'花园餐厅屋顶',tag:'犀牛人',b:find(2,1)},{name:'霓虹商店街',tag:'电光人',b:find(-3,-3)},{name:'小镇酒店屋顶',tag:'绿魔',b:find(1,-4)}];
  const bosses=districts.slice(1).map((d,type)=>({name:d.tag,type,base:d.b,p:V(d.b.x,d.b.h+3.5,d.b.z),hp:[260,220,240][type],max:[260,220,240][type],dead:false,time:0,cool:2.6,warning:0,charge:0,stun:0,color:[color('#b0b5c4'),color('#64edff'),color('#a0db73')][type]}));
- return{buildings,geometry,spawn,districts,bosses,shops,obstacles,range,parks,places:[{name:'喷泉花园',p:V(385,1.6,0)},{name:'美食街',p:V(220,1.6,110)},{name:'小吃街',p:V(-220,1.6,-330)},{name:'湖畔观景园',p:V(-660,1.6,660)}]};}
+ return{buildings,geometry,spawn,districts,bosses,shops,obstacles,range,parks,places:[{name:'喷泉花园',p:V(385,1.6,0)},{name:'美食街',p:V(220,1.6,220)},{name:'小吃街',p:V(-220,1.6,-220)},{name:'湖畔观景园',p:V(-605,1.6,550)}]};}
 export class Simulation {
  constructor(world){this.world=world;const s=world.spawn;this.p=V(s.x,s.h+2.5,s.z);this.v=V();this.facing=0;this.hp=100;this.inv=0;this.grounded=true;this.jumpLock=false;this.ropes=[null,null];this.shots=[];this.particles=[];this.attackCool=0;this.groundTime=0;this.time=0;this.checkpoint=s;this.messages=[];this.previousHook=[false,false];this.hookRetry=[0,0];this.hookFlash=[0,0];this.climbing=null;this.interior=null;this.outsidePosition=null;this.visited=new Set();this.suit=null;this.inventory=new Set();}
  notify(text){this.messages.push(text);}
