@@ -1,5 +1,5 @@
-import{V,sub,length,color}from'./engine3d.js?v=20261002sandbox2';
-import{installSettings,DEFAULT_KEYS}from'./settings.js?v=20261002sandbox2';
+import{V,sub,length,color}from'./engine3d.js?v=20261002town3';
+import{installSettings,DEFAULT_KEYS}from'./settings.js?v=20261002town3';
 export{DEFAULT_KEYS};
 export function installFeatures(sim,canvas,callbacks){const $=id=>document.getElementById(id);const keys={...DEFAULT_KEYS};let active=null,saveTime=0,captureRequested=false;let filter='none',zoom=17;
  try{const saved=JSON.parse(localStorage.getItem('spider-neon-adventure')||'null');if(saved){if(['peter','gwen','miles'].includes(saved.character))sim.character=saved.character;if(['easy','normal','hard'].includes(saved.difficulty))sim.difficulty=saved.difficulty;sim.style=Math.max(0,Math.min(100000,Number(saved.style)||0));sim.raceBest=Number.isFinite(saved.raceBest)?saved.raceBest:null;if(Array.isArray(saved.visited))sim.visited=new Set(saved.visited.filter(n=>[0,1,2].includes(n)));if(Array.isArray(saved.backpacks))sim.backpacks.forEach((b,i)=>b.found=!!saved.backpacks[i]);if(saved.keys&&Object.values(saved.keys).every(v=>typeof v==='string'&&v.length<8))Object.assign(keys,saved.keys);}}
