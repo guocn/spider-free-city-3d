@@ -114,6 +114,7 @@ simE.escort.timeLeft=0.01;
 simE.update(1/60,inE,0);
 assert.equal(simE.escort,null,'超时应失败');
 assert.ok(simE.escortCooldown>0,'失败后应进入冷却');
+assert.ok(Math.hypot(simE.civilians[1].home.x-simE.civilians[1].p.x,simE.civilians[1].home.z-simE.civilians[1].p.z)<1,'失败后市民应被送回原地');
 assert.equal(simE.stats.escortsDone,1,'超时不得计入完成');
 simE.escortCooldown=0.01;
 simE.update(1/60,inE,0);
