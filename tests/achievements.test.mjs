@@ -6,14 +6,14 @@ const fullSim={ropes:[{},{}],combo:5,noLandingDistance:1000,style:5000,stuntChal
  visited:new Set(Array.from({length:67},(_,i)=>String(i))),
  backpacks:[{found:true},{found:true},{found:true},{found:true},{found:true}],
  photos:new Set([1,2,3,4]),events:Array.from({length:7},()=>({state:'done'})),
- stats:{websFired:9,citizenTalks:10,maxSpeed:130,perfectDodges:3,tricks:50}};
+ stats:{websFired:9,citizenTalks:10,maxSpeed:130,perfectDodges:3,tricks:50,raceWins:1,escortsDone:1}};
 const emptySim={ropes:[],combo:0,noLandingDistance:0,style:0,stuntChallenge:null,
  world:{bosses:[{dead:false},{dead:false},{dead:false}],shops:new Array(67)},
  visited:new Set(),backpacks:[{found:false}],photos:new Set(),events:[{state:'ready'}],
- stats:{websFired:0,citizenTalks:0,maxSpeed:0,perfectDodges:0,tricks:0}};
+ stats:{websFired:0,citizenTalks:0,maxSpeed:0,perfectDodges:0,tricks:0,raceWins:0,escortsDone:0}};
 
-assert.equal(ACHIEVEMENTS.length,18,'应有 18 个成就');
-assert.equal(new Set(ACHIEVEMENTS.map(a=>a.id)).size,18,'成就 id 不得重复');
+assert.equal(ACHIEVEMENTS.length,20,'应有 20 个成就');
+assert.equal(new Set(ACHIEVEMENTS.map(a=>a.id)).size,20,'成就 id 不得重复');
 for(const a of ACHIEVEMENTS){
  assert.equal(typeof a.reward,'number');
  assert.equal(a.check(fullSim,fullSim.stats),true,a.id+' 应在满足状态达成');
@@ -21,7 +21,7 @@ for(const a of ACHIEVEMENTS){
 }
 const sys=new AchievementSystem(fullSim);
 const fresh=sys.checkAll();
-assert.equal(fresh.length,18,'首次全检应全部达成');
+assert.equal(fresh.length,20,'首次全检应全部达成');
 assert.equal(sys.complete,true);
 const styleAfter=fullSim.style;
 assert.equal(styleAfter,5000+ACHIEVEMENTS.reduce((n,a)=>n+a.reward,0),'奖励风格分应已入账');
@@ -64,7 +64,7 @@ console.log('ultimate suit test: pass');
 // --- save roundtrip: persist shape restores unlocked set; legacy/garbage saves load without throwing ---
 const persistShape={achievements:[...sys.unlocked],stats:{...fullSim.stats}};
 const rt=new AchievementSystem(fullSim);rt.load(persistShape);
-assert.equal(rt.unlocked.size,18,'persist 形状的存档应恢复全部成就');
+assert.equal(rt.unlocked.size,20,'persist 形状的存档应恢复全部成就');
 const rtLegacy=new AchievementSystem(emptySim);rtLegacy.load(null);
 assert.equal(rtLegacy.unlocked.size,0,'null 存档应安全得到空成就集');
 const rtGarbage=new AchievementSystem(emptySim);rtGarbage.load({achievements:'garbage',stats:42});
