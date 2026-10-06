@@ -1,4 +1,4 @@
-import {Geometry,V,add,sub,mul,dot,length,unit,clamp} from './engine3d.js?v=20261006tag';
+import {Geometry,V,add,sub,mul,dot,length,unit,clamp} from './engine3d.js?v=20261006fix';
 // Spatial bins are shared by movement, projectiles and camera queries.
 export class CollisionIndex {
  constructor(items){this.items=items;this.bins=new Map();for(const b of items){for(let x=Math.floor((b.x-b.w/2)/32);x<=Math.floor((b.x+b.w/2)/32);x++)for(let z=Math.floor((b.z-b.d/2)/32);z<=Math.floor((b.z+b.d/2)/32);z++){const key=x+','+z;if(!this.bins.has(key))this.bins.set(key,[]);this.bins.get(key).push(b);}}}
