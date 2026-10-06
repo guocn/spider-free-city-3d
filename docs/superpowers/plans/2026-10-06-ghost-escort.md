@@ -348,3 +348,9 @@ git commit -m "Bump cache version for ghost-escort release and update README"
 - **类型一致性**：`startEscort(c)/stopEscort(silent)`、`escort={citizen,dest,destName,timeLeft}`、`raceGhost={time,samples}`、stats 字段 `raceWins/escortsDone` 在各任务与 spec 一致；DOM id `escortStatus` 在 T3 的 index.html（结构）与 game3d.js（读写）一致。
 - **已知取舍**：幽灵重放在样本耗尽时定格于末样本（竞速时长超旧纪录即必败，可接受）；护送跟随无碰撞检测（市民贴着英雄飞，渲染上有系绳解释）；`escort` 块位于 rest 早退之前，休息时计时继续（与竞速计时同语义）。
 - **风险备注**：T2 测试用「瞬移到最后光环」制造冲线，依赖 race.time 尚小 → 第二次竞速必然判 `beat`，属于测试构造而非玩法缺陷；updateHUD 的 `$('escortStatus')` 依赖 T3 的 index.html 改动，两者同任务落地。
+
+## 执行修正记录（控制器批准）
+
+1. Task 3 测试超时值 0.05→0.01：0.05 扣一帧(1/60)后仍为正，超时分支永不触发。
+2. Task 3 修复轮：`skill()` 不再经 `stopRest()` 清休息态（改为直接 `this.resting=false;this.hanging=null;`）——否则护送中释放任何技能都会立即弃单，护送玩法不可用；`stopRest()` 本体与其余调用点（teleport/visitShop/enterShop/startRace）保持取消护送语义。
+3. 终审修复轮：护送失败/放弃时市民送回 `home`（与"自己回去了"提示一致，避免市民滞留屋顶/半空）；`stopRest` 护送分支不再提前 return（弃单同时脱离休息/倒挂）；`startEscort` 增加进行中守卫；请求标记距离判定改 `Math.hypot` 免分配；`raceGhost` 载入校验样本值 `Number.isFinite`；`interactActivity`/`nearbyActivity` 优先匹配 `escortRequest` 市民（接单可发现性）；`#escortStatus` 移动端 top 285px 并补 `max-height:520px` 横屏规则。
