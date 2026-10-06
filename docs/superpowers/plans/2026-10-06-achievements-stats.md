@@ -162,11 +162,13 @@ Expected: FAIL — `sim.stats` 为 undefined（`assert.equal(sim.stats.playTime,
 
 - [ ] **Step 3: 修改 `adventure.js`**
 
-3a. 构造函数——找到 `this.inventory=new Set();}`（构造函数结尾），替换为：
+3a. 构造函数——Adventure 构造函数（adventure.js 第 7 行）以事件数组 push 结尾：`.map(e=>({...e,kind:'conflict',state:'ready',progress:0,need:2})));}`，在该结尾处追加 stats 字段（注意：`this.inventory` 由 world3d.js 的 Simulation 构造函数设置，Adventure 无需重复；执行时子代理已发现并经确认修正此锚点）：
 
 ```js
 this.inventory=new Set();this.stats={playTime:0,flightDistance:0,maxSpeed:0,websFired:0,enemiesDefeated:0,citizenTalks:0,perfectDodges:0,tricks:0};this.noLandingDistance=0;}
 ```
+
+（执行版：在 Adventure 构造函数结尾追加 `this.stats={playTime:0,flightDistance:0,maxSpeed:0,websFired:0,enemiesDefeated:0,citizenTalks:0,perfectDodges:0,tricks:0};this.noLandingDistance=0;}`；上方案例代码保留 inventory 行仅适用于 world3d.js 的 Simulation 构造函数上下文。）
 
 3b. `update()` 开头——找到 `update(dt,input,yaw){if(this.grounded)this.airAttachCount=0;this.weatherClock+=dt;` 替换为：
 
