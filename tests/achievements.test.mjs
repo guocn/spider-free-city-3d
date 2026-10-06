@@ -31,3 +31,20 @@ sys2.load({achievements:['first-swing','nope-not-real']});
 assert.deepEqual([...sys2.unlocked],['first-swing'],'load 应忽略未知 id');
 assert.equal(ULTIMATE_SUIT.name,'午夜鎏金');
 console.log('achievements unit tests: all pass');
+
+// --- integration: stats accumulate in the real simulation ---
+const {createWorld} = await import('../world3d.js');
+const {Adventure} = await import('../adventure.js');
+const world=createWorld();
+const sim=new Adventure(world);
+assert.equal(sim.stats.playTime,0,'Adventure 应初始化 stats');
+const input={forward:1,right:0,jump:false,webLeft:true,webRight:false,attack:false,climb:false};
+for(let i=0;i<240;i++)sim.update(1/120,input,i*0.01);
+assert.ok(sim.stats.playTime>1.9,'playTime 应累计 240 帧');
+assert.ok(sim.stats.websFired>=1,'持住左手蛛丝应至少成功挂丝一次');
+assert.ok(sim.stats.flightDistance>0,'起飞后应累计飞行距离');
+assert.ok(sim.stats.maxSpeed>0,'应有速度记录');
+const live=new AchievementSystem(sim);
+const got=live.checkAll();
+assert.ok(got.some(a=>a.id==='first-swing'),'首摆成就应达成');
+console.log('achievements integration test: pass');
