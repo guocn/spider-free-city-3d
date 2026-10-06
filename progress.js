@@ -1,7 +1,7 @@
 // Persistent progress is separate from transient physics and open menus.
 export function snapshotProgress(sim, keys) {
   return {
-    version: 1,
+    version: 2,
     character: sim.character,
     difficulty: sim.difficulty,
     style: sim.style,
@@ -17,7 +17,8 @@ export function snapshotProgress(sim, keys) {
     inventory: [...sim.inventory],
     keys: { ...keys },
     achievements: [...sim.achievements.unlocked],
-    stats: { ...sim.stats }
+    stats: { ...sim.stats },
+    town: sim.townLife?.snapshot() || null
   };
 }
 
@@ -71,6 +72,7 @@ export function restoreProgress(sim, saved) {
   if (saved.stats && typeof saved.stats === 'object') for (const key in sim.stats) {
     if (Number.isFinite(saved.stats[key]) && saved.stats[key] >= 0) sim.stats[key] = saved.stats[key];
   }
+  sim.townLife?.restore(saved.town);
   const ghost = saved.raceGhost;
   if (ghost && Number.isFinite(ghost.time) && ghost.time > 0 && Array.isArray(ghost.samples)) {
     const samples = ghost.samples.filter(a =>
