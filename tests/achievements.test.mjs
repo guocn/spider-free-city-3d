@@ -48,3 +48,15 @@ const live=new AchievementSystem(sim);
 const got=live.checkAll();
 assert.ok(got.some(a=>a.id==='first-swing'),'首摆成就应达成');
 console.log('achievements integration test: pass');
+
+// --- ultimate suit gating in shopAction ---
+const world2=createWorld();const sim2=new Adventure(world2);
+sim2.interior={shop:{type:1,name:'织光服装店'}};
+sim2.shopAction(5);
+assert.ok(sim2.suitType!==5,'未全达成时不得解锁午夜鎏金');
+sim2.achievements={complete:true};
+sim2.shopAction(5);
+assert.equal(sim2.suitType,5,'全达成后应解锁');
+assert.equal(Array.isArray(sim2.suit.red),true,'suit.red 应为 color() 返回的数组');
+assert.ok(Math.abs(sim2.suit.blue[0]-0xc9/255)<.01,'鎏金红分量应为 #c9/255');
+console.log('ultimate suit test: pass');
