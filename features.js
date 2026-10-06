@@ -1,7 +1,7 @@
-import{V,sub,length,color}from'./engine3d.js?v=20261006savefix';
-import{installSettings,DEFAULT_KEYS}from'./settings.js?v=20261006savefix';
+import{V,sub,length,color}from'./engine3d.js?v=20261006achv';
+import{installSettings,DEFAULT_KEYS}from'./settings.js?v=20261006achv';
 import{AchievementSystem,ACHIEVEMENTS}from'./achievements.js?v=20261006achv';
-import{normalizeKeys}from'./settings-model.js?v=20261006savefix';
+import{normalizeKeys}from'./settings-model.js?v=20261006achv';
 export{DEFAULT_KEYS};
 export function installFeatures(sim,canvas,callbacks){const $=id=>document.getElementById(id);const keys={...DEFAULT_KEYS};let active=null,saveTime=0,captureRequested=false;let filter='none',zoom=17;
  let saved=null;try{saved=JSON.parse(localStorage.getItem('spider-neon-adventure')||'null');if(saved){if(['peter','gwen','miles'].includes(saved.character))sim.character=saved.character;if(['easy','normal','hard'].includes(saved.difficulty))sim.difficulty=saved.difficulty;sim.style=Math.max(0,Math.min(100000,Number(saved.style)||0));sim.raceBest=Number.isFinite(saved.raceBest)?saved.raceBest:null;if(Array.isArray(saved.visited))sim.visited=new Set(saved.visited.filter(n=>typeof n==='string'));if(Array.isArray(saved.backpacks))sim.backpacks.forEach((b,i)=>b.found=!!saved.backpacks[i]);if(saved.keys)Object.assign(keys,normalizeKeys(saved.keys));}}

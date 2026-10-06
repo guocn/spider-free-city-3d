@@ -1,8 +1,8 @@
-import {V,add,sub,mul,dot,length,unit,clamp,color,Geometry} from './engine3d.js?v=20261006savefix';
-import {SHOP_CATALOG,CORE_SHOPS} from './town-catalog.js?v=20261006savefix';
-import {SolidGeometry,CollisionIndex,CollisionScene,queryCollisions,segmentHit,nearestCollision,moveSolid} from './collision.js?v=20261006savefix';
-import {heroPose} from './hero-pose.js?v=20261006savefix';
-import {garden,fountain,bench,shopDetails} from './town-details.js?v=20261006savefix';
+import {V,add,sub,mul,dot,length,unit,clamp,color,Geometry} from './engine3d.js?v=20261006achv';
+import {SHOP_CATALOG,CORE_SHOPS} from './town-catalog.js?v=20261006achv';
+import {SolidGeometry,CollisionIndex,CollisionScene,queryCollisions,segmentHit,nearestCollision,moveSolid} from './collision.js?v=20261006achv';
+import {heroPose} from './hero-pose.js?v=20261006achv';
+import {garden,fountain,bench,shopDetails} from './town-details.js?v=20261006achv';
 export const PALETTE={red:color('#ee354f'),blue:color('#2058aa'),white:color('#f0faff'),ink:color('#142139'),web:color('#bcefff'),cyan:color('#58d7ee'),glow:[.25,1.65,2.1],pink:[1.8,.22,1.05]};
 export const MACARON=['#f4a6b0','#f7bd91','#f5df9d','#bce2af','#a6e3d3','#adcff0','#c9b4ec','#f2bedb'];
 export function createWorld(){let seed=48391;const rnd=()=>{seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;};const buildings=[],shops=[],obstacles=[],geometry=new SolidGeometry(),range=820;const used=new Set();const parks=[];const reserved={'-6,-3':'巷口章鱼烧','-3,-3':'竹签串串铺','0,-3':'暖暖关东煮','3,-3':'小锅生煎','6,-3':'糖葫芦小屋','-7,1':'金麦可颂','-4,1':'海风披萨','-1,1':'暖汤拉面','2,1':'花园餐厅','5,1':'蓝湾寿司'};const reservedNames=new Set(Object.values(reserved));

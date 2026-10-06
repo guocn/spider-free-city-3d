@@ -1,7 +1,7 @@
-import {V,add,sub,mul,length,unit,clamp,mix,color,Geometry,Renderer} from './engine3d.js?v=20261006savefix';
-import {createWorld,Simulation,makeHero,makeBoss,makeCityLife,PALETTE,firstWall} from './world3d.js?v=20261006savefix';
-import{Adventure,makePlayer,makeAdventure}from'./adventure.js?v=20261006savefix';
-import{installFeatures}from'./features.js?v=20261006savefix';
+import {V,add,sub,mul,length,unit,clamp,mix,color,Geometry,Renderer} from './engine3d.js?v=20261006achv';
+import {createWorld,Simulation,makeHero,makeBoss,makeCityLife,PALETTE,firstWall} from './world3d.js?v=20261006achv';
+import{Adventure,makePlayer,makeAdventure}from'./adventure.js?v=20261006achv';
+import{installFeatures}from'./features.js?v=20261006achv';
 import{ULTIMATE_SUIT}from'./achievements.js?v=20261006achv';
 const $=id=>document.getElementById(id),canvas=$('game'),world=createWorld(),sim=new Adventure(world);
 let renderer;

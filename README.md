@@ -38,6 +38,7 @@ python3 -m http.server 8000
 - `world3d.js`：城市生成、角色物理、蛛丝约束、碰撞和 Boss 战斗。
 - `game3d.js`：手机与电脑操作、镜头跟随、界面和地图。
 - `style.css`：适配手机和电脑的界面。
+- `achievements.js`：成就定义与检查器（纯逻辑，可在 Node 中测试）。
 
 ## 验证范围
 
