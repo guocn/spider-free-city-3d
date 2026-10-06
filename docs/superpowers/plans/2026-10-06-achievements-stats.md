@@ -403,6 +403,8 @@ import{ULTIMATE_SUIT}from'./achievements.js?v=20261006achv';
 
 3b. openShopMenu——找到 `$('shopItems').replaceChildren();names.forEach((name,i)=>{` 在其前插入一行：
 
+（执行修正，已经控制器批准：`names` 声明为 `const`，下方插入代码对其重赋值会 TypeError。需同时把声明 `const names=shop.menu||` 改为 `let names=shop.menu||`，其余不变。）
+
 ```js
 const ultimate=sim.achievements&&sim.achievements.complete;if(shop.type===1&&ultimate){names=[...names,ULTIMATE_SUIT.name+'战衣'];notes[shop.type]=[...notes[shop.type],'全成就限定 · 城市传奇专属'];}
 ```
