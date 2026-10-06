@@ -95,3 +95,28 @@ assert.ok(simG.raceGhost.time<firstGhostTime,'新纪录应更新幽灵');
 const checkGhost=ACHIEVEMENTS.find(a=>a.id==='ghost-beat');
 assert.equal(checkGhost.check(simG,simG.stats),true,'ghost-beat 应达成');
 console.log('ghost race test: pass');
+
+// --- escort state machine: follow, deliver, fail, request spawn ---
+const worldE=createWorld();const simE=new Adventure(worldE);
+const cit=simE.civilians[0];
+simE.startEscort(cit);
+assert.ok(simE.escort&&simE.escort.timeLeft>89&&simE.escort.timeLeft<=90,'护送应开始且计时 90 秒');
+assert.equal(cit.escortRequest,false,'接单应清除请求标记');
+const destE=simE.escort.dest;
+const inE={forward:0,right:0,jump:false,webLeft:false,webRight:false,attack:false,climb:false};
+simE.p={x:destE.x,y:1.6,z:destE.z};
+for(let i=0;i<180;i++)simE.update(1/60,inE,0);
+assert.equal(simE.escort,null,'到达目的地应完成护送');
+assert.equal(simE.stats.escortsDone,1,'完成应计数');
+assert.ok(Math.hypot(cit.home.x-destE.x,cit.home.z-destE.z)<1,'市民新家应设在目的地');
+simE.startEscort(simE.civilians[1]);
+simE.escort.timeLeft=0.01;
+simE.update(1/60,inE,0);
+assert.equal(simE.escort,null,'超时应失败');
+assert.ok(simE.escortCooldown>0,'失败后应进入冷却');
+simE.escortCooldown=0.01;
+simE.update(1/60,inE,0);
+assert.ok(simE.civilians.some(c=>c.escortRequest),'冷却结束应生成新请求');
+const checkEscort=ACHIEVEMENTS.find(a=>a.id==='escort-1');
+assert.equal(checkEscort.check(simE,simE.stats),true,'escort-1 应达成');
+console.log('escort test: pass');
