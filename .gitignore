@@ -1,0 +1,4 @@
+# 本地开发与 AI 协作产物，不发布
+docs/
+tests/
+.superpowers/
