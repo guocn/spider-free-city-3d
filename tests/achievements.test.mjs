@@ -60,3 +60,13 @@ assert.equal(sim2.suitType,5,'全达成后应解锁');
 assert.equal(Array.isArray(sim2.suit.red),true,'suit.red 应为 color() 返回的数组');
 assert.ok(Math.abs(sim2.suit.blue[0]-0xc9/255)<.01,'鎏金红分量应为 #c9/255');
 console.log('ultimate suit test: pass');
+
+// --- save roundtrip: persist shape restores unlocked set; legacy/garbage saves load without throwing ---
+const persistShape={achievements:[...sys.unlocked],stats:{...fullSim.stats}};
+const rt=new AchievementSystem(fullSim);rt.load(persistShape);
+assert.equal(rt.unlocked.size,18,'persist 形状的存档应恢复全部成就');
+const rtLegacy=new AchievementSystem(emptySim);rtLegacy.load(null);
+assert.equal(rtLegacy.unlocked.size,0,'null 存档应安全得到空成就集');
+const rtGarbage=new AchievementSystem(emptySim);rtGarbage.load({achievements:'garbage',stats:42});
+assert.equal(rtGarbage.unlocked.size,0,'畸形存档不得抛异常且为空集');
+console.log('save roundtrip test: pass');
