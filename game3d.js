@@ -1,8 +1,8 @@
-import {V,add,sub,mul,length,unit,clamp,mix,color,Geometry,Renderer} from './engine3d.js?v=20261006ghost';
-import {createWorld,Simulation,makeHero,makeBoss,makeCityLife,PALETTE,firstWall} from './world3d.js?v=20261006ghost';
-import{Adventure,makePlayer,makeAdventure}from'./adventure.js?v=20261006ghost';
-import{installFeatures}from'./features.js?v=20261006ghost';
-import{ULTIMATE_SUIT}from'./achievements.js?v=20261006ghost';
+import {V,add,sub,mul,length,unit,clamp,mix,color,Geometry,Renderer} from './engine3d.js?v=20261006tag';
+import {createWorld,Simulation,makeHero,makeBoss,makeCityLife,PALETTE,firstWall} from './world3d.js?v=20261006tag';
+import{Adventure,makePlayer,makeAdventure}from'./adventure.js?v=20261006tag';
+import{installFeatures}from'./features.js?v=20261006tag';
+import{ULTIMATE_SUIT}from'./achievements.js?v=20261006tag';
 const $=id=>document.getElementById(id),canvas=$('game'),world=createWorld(),sim=new Adventure(world);
 let renderer;
 try{renderer=new Renderer(canvas);}catch(e){$('error').hidden=false;$('error').textContent=e.message;$('start').disabled=true;$('start').textContent='3D 画面无法启动';throw e;}
@@ -53,3 +53,4 @@ function frame(t){const delta=Math.min((t-last)/1000,.05);last=t;clock+=delta;if
 features=installFeatures(sim,canvas,{skill:action=>triggerAction(action),toast,photo:on=>{photoMode=on;},freeze:keep=>{const ropes=sim.ropes,climbing=sim.climbing;paused=true;running=false;clearInput();if(keep){sim.ropes=ropes;sim.climbing=climbing;}},resume:()=>{paused=false;running=started;clearInput();},resetCamera:()=>{syncScene();yaw=0;camera=add(sim.p,V(0,8,18));cameraTarget=add(sim.p,V(0,1.4,0));}});
 updateHUD();drawMap($('radar'));requestAnimationFrame(frame);
 window.spiderGame={getState:()=>({dimension:3,scene:sim.interior?.shop.name||'城市',character:sim.character,style:sim.style,weather:sim.weather,climbing:!!sim.climbing,visitedShops:sim.visited.size,position:{...sim.p},health:sim.hp,settings:{...sim.options},resting:sim.resting,hanging:!!sim.hanging,citizens:sim.options.citizens?sim.civilians.length:0,boundEnemies:sim.targets().filter(b=>b.bound>0).map(b=>({name:b.name,seconds:b.bound})),swinging:sim.ropes.filter(Boolean).length,bosses:world.bosses.map(b=>({name:b.name,hp:b.hp,dead:b.dead}))})};
+const gameVersion=new URL(import.meta.url).searchParams.get('v');if(gameVersion){const tag=document.createElement('div');tag.id='versionTag';tag.textContent='v'+gameVersion;document.body.appendChild(tag);}

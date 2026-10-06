@@ -1,4 +1,4 @@
-import{V,add,mul,unit,color}from'./engine3d.js?v=20261006ghost';
+import{V,add,mul,unit,color}from'./engine3d.js?v=20261006tag';
 const stone=color('#e7decf'),wood=color('#ac805e'),iron=color('#596b68');
 export function bench(g,x,z){for(const dx of [-2.7,2.7]){g.limb(V(x+dx,.2,z-.7),V(x+dx,1.3,z-.7),.13,iron);g.limb(V(x+dx,.2,z+.7),V(x+dx,2.8,z+.9),.13,iron);g.limb(V(x+dx,1.8,z-.8),V(x+dx,1.8,z+.8),.13,iron);}for(let k=0;k<4;k++){g.box(x,1.25,z-.75+k*.5,7.6,.18,.4,wood);g.box(x,1.65+k*.32,z+.9,7.6,.24,.16,wood);}}
 export function tree(g,x,z,variant=0){g.box(x,.65,z,5,.8,5,color('#cbbda5'));g.sphere(x,.18,z,5,color('#94aa91'),1,.025,.8,12,3);g.limb(V(x,.8,z),V(x+.25,6.2,z),.38,color('#95795b'));g.limb(V(x,4,z),V(x-1.6,6.2,z+.6),.2,color('#95795b'));const greens=['#91bc82','#8fb39b','#aec68b'];for(const [dx,dy,dz,r]of [[0,6.8,0,3.3],[-1.5,5.8,.5,2.3],[1.6,6.2,-.5,2.5]])g.sphere(x+dx,dy,z+dz,r,color(greens[variant%3]),1,1.1,.9,10,5);}
