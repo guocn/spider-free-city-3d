@@ -30,5 +30,6 @@ class CityAudio{
  apply(){if(!this.ctx)return;for(const kind of ['music','ambient','effects'])this.bus[kind].gain.setTargetAtTime(this.sim.options[kind+'Volume']/100*(kind==='ambient'?.18:.12),this.ctx.currentTime,.05);}
  tone(kind,freq,time=.2,type='sine'){if(!this.ctx||this.ctx.state!=='running'||!this.sim.options[kind+'Volume'])return;const o=this.ctx.createOscillator(),g=this.ctx.createGain(),t=this.ctx.currentTime;o.type=type;o.frequency.setValueAtTime(freq,t);g.gain.setValueAtTime(.001,t);g.gain.exponentialRampToValueAtTime(.35,t+.025);g.gain.exponentialRampToValueAtTime(.001,t+time);o.connect(g);g.connect(this.bus[kind]);o.start();o.stop(t+time+.02);}
  effect(action){this.start();this.tone('effects',action==='bind'?700:action==='attack'?520:action==='dodge'?300:action==='interact'?880:450,.13,'triangle');}
+ achievement(){this.tone('effects',880,.15,'triangle');setTimeout(()=>this.tone('effects',1318.5,.3,'triangle'),110);}
  tick(dt,running){if(!running||!this.ctx)return;this.timer+=dt;if(this.timer>1.2){this.timer=0;this.tone('music',[196,246.94,293.66,392,329.63,293.66,246.94,220][this.note++%8],.95);}}
 }
