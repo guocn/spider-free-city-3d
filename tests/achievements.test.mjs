@@ -114,6 +114,7 @@ simE.escort.timeLeft=0.01;
 simE.update(1/60,inE,0);
 assert.equal(simE.escort,null,'超时应失败');
 assert.ok(simE.escortCooldown>0,'失败后应进入冷却');
+assert.equal(simE.stats.escortsDone,1,'超时不得计入完成');
 simE.escortCooldown=0.01;
 simE.update(1/60,inE,0);
 assert.ok(simE.civilians.some(c=>c.escortRequest),'冷却结束应生成新请求');
