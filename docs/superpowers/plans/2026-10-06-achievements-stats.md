@@ -285,6 +285,8 @@ import{AchievementSystem,ACHIEVEMENTS}from'./achievements.js?v=20261006achv';
 
 找到 try 块结尾 `catch{}function persist(){`，把 `catch{}` 替换为：
 
+（执行修正，已经控制器批准：真实文件中 `saved` 是 try 块内 `const`，块外引用会 ReferenceError。需先把 try 前的 `try{const saved=JSON.parse(...)` 改为 `let saved=null;try{saved=JSON.parse(...)`，其余不变。）
+
 ```js
 catch{}const achievements=sim.achievements=new AchievementSystem(sim);achievements.load(saved);if(saved&&saved.stats&&sim.stats)for(const k in sim.stats)if(typeof sim.stats[k]==='number')sim.stats[k]=Number(saved.stats[k])||0;
 function persist(){
